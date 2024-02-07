@@ -5,10 +5,12 @@
 #---VARIABLES---------------------------------#
 #---PROJECT---#
 APP_NAME = sidtest
+DOCKER_NETWORK_NAME = ${APP_NAME}_network
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
 make docker-network: ## Create docker network.
 	docker network create ${DOCKER_NETWORK_NAME}
+
 ##- Local -------------------------------------------------------
 local-down:	## Stop docker containers.
 	docker compose --env-file .env -f docker/local/docker-compose.yml down
@@ -22,22 +24,26 @@ local-restart: ## Restart docker containers.
 local-bash: ## Start bash in php container.
 	docker exec -it local_${APP_NAME}_app bash
 
+make local-init: ## Initialize env and start docker containers.
+	make docker-network && \
+	make local-up && \
+	make local-bash
+
 local-migrate: ## Run migrations.
 	php bin/console make:migration --no-interaction && \
 	php bin/console d:m:m --no-interaction && \
 	php bin/console cache:clear
-
 
 ##- Staging -----------------------------------------------------
 staging-build: ## Build image.
 	docker build -f ./docker/global/Dockerfile --build-arg name=staging -t ${APP_NAME}:staging .
 
 staging-up: ## Start docker containers.
-	docker compose --env-file .env.staging -f docker/global/docker-compose.yml down && \
-	docker compose --env-file .env.staging -f docker/global/docker-compose.yml up
+	docker compose --env-file .env.staging -f docker/staging-prod/docker-compose.yml down && \
+	docker compose --env-file .env.staging -f docker/staging-prod/docker-compose.yml up
 
 staging-down: ## Stop docker containers.
-	docker compose --env-file ./bin/staging/.env.staging -f docker/global/docker-compose.yml down
+	docker compose --env-file ./bin/staging/.env.staging -f docker/staging-prod/docker-compose.yml down
 
 staging-bash: ## Start bash in php container.
 	docker exec -it staging_${APP_NAME}_app bash

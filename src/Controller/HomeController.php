@@ -15,7 +15,7 @@ class HomeController extends AbstractController
         $stripe = new Stripe();
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'Yolo',
         ]);
     }
 }

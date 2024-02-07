@@ -2,7 +2,7 @@ version: '3'
 
 networks:
   # ⚠️ Do not forget to change the network name ⚠️
-#  YOUR_APP_NAME_network:
+  sidtest_network:
     external: true
   bridge:
     driver: bridge
@@ -50,7 +50,8 @@ services:
     container_name: ${APP_CONTAINER_NAME}
     build:
       context: ../..
-      dockerfile: docker/local/Dockerfile
+      dockerfile: docker/global/Dockerfile
+      target: ${DOCKERFILE_TARGET}
     env_file:
       - ../../.env
     volumes:
