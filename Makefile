@@ -44,7 +44,7 @@ local-bash: ## Start bash in php container.
 	docker exec -it local_${APP_NAME}_app bash
 
 make local-init: ## Initialize env and start docker containers.
-	mv .env.local.exemple .env && \
+	cp .env.local.exemple .env && \
 	./bin/test.sh && \
 	make docker-network && \
 	make local-up && \
