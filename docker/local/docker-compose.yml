@@ -1,7 +1,7 @@
 version: '3.8'
 
 networks:
-  kikoulol_network:
+  YOUR_APP_NAME_network:
     external: true
   bridge:
     driver: bridge
@@ -59,6 +59,7 @@ services:
       - ${APP_PORT}:80
     networks:
       - ${DOCKER_NETWORK_NAME}
+      - bridge
 
 volumes:
   dbdata:

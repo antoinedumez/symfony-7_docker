@@ -4,13 +4,12 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME =kikoulol
+APP_NAME =YOUR_APP_NAME
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
 make define-app-name: ## Define app name.
 	./bin/test.sh
-
 
 make docker-network: ## Create docker network.
 	docker network create ${DOCKER_NETWORK_NAME}
