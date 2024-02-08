@@ -4,19 +4,34 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME = sidtest
+APP_NAME = YOUR_APP_NAME
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
 make docker-network: ## Create docker network.
 	docker network create ${DOCKER_NETWORK_NAME}
 
+migration-create: ## Create migrations.
+	php bin/console make:migration --no-interaction
+
+migration-migrate: ## Run migrations.
+	php bin/console d:m:m --no-interaction && \
+	php bin/console cache:clear
+
+composer-install: ## Run composer install.
+	composer install --no-interaction
+
+deploy: ## run migrations + composer install + cache clear.
+	make composer-install && \
+	make migration-migrate
+	exec apache2-foreground
+
 ##- Local -------------------------------------------------------
 local-down:	## Stop docker containers.
 	docker compose --env-file .env -f docker/local/docker-compose.yml down
 
 local-up: ## Start docker containers.
-	docker compose --env-file .env -f docker/local/docker-compose.yml up --build
+	docker compose --env-file .env -f docker/local/docker-compose.yml up --build -d
 
 local-restart: ## Restart docker containers.
 	make local-down && make local-up
@@ -27,12 +42,8 @@ local-bash: ## Start bash in php container.
 make local-init: ## Initialize env and start docker containers.
 	make docker-network && \
 	make local-up && \
+	make deploy && \
 	make local-bash
-
-local-migrate: ## Run migrations.
-	php bin/console make:migration --no-interaction && \
-	php bin/console d:m:m --no-interaction && \
-	php bin/console cache:clear
 
 ##- Staging -----------------------------------------------------
 staging-build: ## Build image.
@@ -50,13 +61,6 @@ staging-bash: ## Start bash in php container.
 
 staging-migrate: ## Run migrations.
 	php bin/console d:m:m --no-interaction
-
-##- Deploy -----------------------------------------------------
-deploy: ## run migrations + composer install + cache clear.
-	php bin/console d:m:m --no-interaction && \
-	composer install && \
-	php bin/console cache:clear && \
-	exec apache2-foreground
 
 
 ##- Help -----------------------------------------------------

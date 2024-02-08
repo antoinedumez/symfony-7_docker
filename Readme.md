@@ -16,16 +16,17 @@ In local, staging or production, the project will run with docker.
 - Clone the repository
 
 
-- Create a .env file from the .env.local.exemple file
+- Create a .env file from the .env.local.exemple 
 
 
 ```
-You have to define your application name
 If needed you can change the services ports and database or pgadmin credentials
 ```
-
-- Modify the networks name in `./docker/local/docker-compose.yml` file (replace YOUR_APP_NAME by your application name, let the '_network' suffix)
- 
+- Modify your application name in 3 places :
+  - ```./.env```
+  - ```./docker/local/docker-compose.yml```
+  - ```./Makefile``` 
+  
 
 - Run `make local-init`
 

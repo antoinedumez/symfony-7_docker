@@ -1,8 +1,8 @@
-version: '3'
+version: '3.8'
 
 networks:
   # ⚠️ Do not forget to change the network name ⚠️
-  sidtest_network:
+  YOUR_APP_NAME_network:
     external: true
   bridge:
     driver: bridge
