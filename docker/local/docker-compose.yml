@@ -1,8 +1,7 @@
 version: '3.8'
 
 networks:
-  # ⚠️ Do not forget to change the network name ⚠️
-  YOUR_APP_NAME_network:
+  kikoulol_network:
     external: true
   bridge:
     driver: bridge

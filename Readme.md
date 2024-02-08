@@ -15,25 +15,16 @@ In local, staging or production, the project will run with docker.
 
 - Clone the repository
 
-
-- Create a .env file from the .env.local.exemple 
-
-
-```
-If needed you can change the services ports and database or pgadmin credentials
-```
-- Modify your application name in 3 places :
-  - ```./.env```
-  - ```./docker/local/docker-compose.yml```
-  - ```./Makefile``` 
-  
-
 - Run `make local-init`
 
-
 ```
+Your application is available at http://localhost:1080 and your pgadmin at http://localhost:5050.
+
+Next time you want to start your application, you can run `make local-start`.
+
 You can run make help to see the available commands
 ```
+
 # Staging
 
 # Production

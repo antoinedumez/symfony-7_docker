@@ -4,10 +4,14 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME = YOUR_APP_NAME
+APP_NAME =kikoulol
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
+make define-app-name: ## Define app name.
+	./bin/test.sh
+
+
 make docker-network: ## Create docker network.
 	docker network create ${DOCKER_NETWORK_NAME}
 
@@ -40,6 +44,8 @@ local-bash: ## Start bash in php container.
 	docker exec -it local_${APP_NAME}_app bash
 
 make local-init: ## Initialize env and start docker containers.
+	mv .env.local.exemple .env && \
+	./bin/test.sh && \
 	make docker-network && \
 	make local-up && \
 	make deploy && \

@@ -2,7 +2,6 @@ FROM php:8.3-apache as php_upstream
 
 # =====================================================================
 # PHP BASE IMAGE ======================================================
-
 FROM php_upstream AS php_base
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -22,10 +21,8 @@ RUN chmod -R 777 /var/www/
 WORKDIR /var/www/
 EXPOSE 80
 
-
 # =====================================================================
 # PHP STAGING IMAGE ===================================================
-
 FROM php_base AS php_staging
 
 COPY ./.env.staging /var/www/.env
