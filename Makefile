@@ -4,7 +4,7 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME =YOUR_APP_NAME
+APP_NAME = YOUR_APP_NAME
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
@@ -27,7 +27,7 @@ composer-install: ## Run composer install.
 deploy: ## run migrations + composer install + cache clear.
 	make composer-install && \
 	make migration-migrate
-	exec apache2-foreground
+
 
 ##- Local -------------------------------------------------------
 local-down:	## Stop docker containers.
@@ -44,10 +44,11 @@ local-bash: ## Start bash in php container.
 
 make local-init: ## Initialize env and start docker containers.
 	cp .env.local.exemple .env && \
-	./bin/test.sh && \
+	./bin/modifyAppName.sh && \
 	make docker-network && \
 	make local-up && \
-	make deploy && \
+#	TODO: MAKE THIS COMMAND WORKS
+	docker exec -it ${APP_CONTAINER_NAME} ./bin/deploy.sh && \
 	make local-bash
 
 ##- Staging -----------------------------------------------------
