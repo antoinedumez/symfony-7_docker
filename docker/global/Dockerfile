@@ -12,7 +12,10 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
-RUN apt update && apt install -yqq nodejs npm && apt install make
+RUN apt update && \
+     apt install -yqq nodejs npm && \
+     apt install make && \
+     apt-get install -y zip
 
 COPY ../.. /var/www/
 COPY docker/global/apache.conf /etc/apache2/sites-available/000-default.conf

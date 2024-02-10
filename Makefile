@@ -6,6 +6,7 @@
 #---PROJECT---#
 APP_NAME = YOUR_APP_NAME
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
+
 ##=== 🐋  DOCKER ================================================
 ##- Global -----------------------------------------------------
 make define-app-name: ## Define app name.
@@ -42,13 +43,17 @@ local-restart: ## Restart docker containers.
 local-bash: ## Start bash in php container.
 	docker exec -it local_${APP_NAME}_app bash
 
+local-deploy: ## Run deploy script.
+	docker exec local_${APP_NAME}_app ./bin/deploy.sh
+
 make local-init: ## Initialize env and start docker containers.
 	cp .env.local.exemple .env && \
 	./bin/modifyAppName.sh && \
 	make docker-network && \
 	make local-up && \
-#	TODO: MAKE THIS COMMAND WORKS
-	docker exec -it ${APP_CONTAINER_NAME} ./bin/deploy.sh && \
+	chmod +x ./bin/deploy.sh && \
+	make local-deploy && \
+
 	make local-bash
 
 ##- Staging -----------------------------------------------------
