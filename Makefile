@@ -4,7 +4,7 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME = YOUR_APP_NAME
+APP_NAME = aaa
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 
 ##=== 🐋  DOCKER ================================================
@@ -27,7 +27,8 @@ composer-install: ## Run composer install.
 
 deploy: ## run migrations + composer install + cache clear.
 	make composer-install && \
-	make migration-migrate
+	make migration-migrate && \
+	exec apache2-foreground
 
 
 ##- Local -------------------------------------------------------
@@ -53,12 +54,11 @@ make local-init: ## Initialize env and start docker containers.
 	make local-up && \
 	chmod +x ./bin/deploy.sh && \
 	make local-deploy && \
-
 	make local-bash
 
 ##- Staging -----------------------------------------------------
 staging-build: ## Build image.
-	docker build -f ./docker/global/Dockerfile --build-arg name=staging -t ${APP_NAME}:staging .
+	docker build -f ./docker/global/Dockerfile --target php_staging --build-arg name=staging -t ${APP_NAME}:staging .
 
 staging-up: ## Start docker containers.
 	docker compose --env-file .env.staging -f docker/staging-prod/docker-compose.yml down && \
@@ -68,11 +68,17 @@ staging-down: ## Stop docker containers.
 	docker compose --env-file ./bin/staging/.env.staging -f docker/staging-prod/docker-compose.yml down
 
 staging-bash: ## Start bash in php container.
-	docker exec -it staging_${APP_NAME}_app bash
+	docker exec -it staging__app bash
 
 staging-migrate: ## Run migrations.
 	php bin/console d:m:m --no-interaction
 
+staging-deploy: ## run migrations + composer install + cache clear.
+	make composer-install && \
+	make migration-migrate && \
+	chmod +x ./bin/deploy-staging.sh && \
+	./bin/deploy.sh && \
+	exec apache2-foreground
 
 ##- Help -----------------------------------------------------
 help: ## Show this help.

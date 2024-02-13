@@ -1,7 +1,7 @@
 version: '3.8'
 
 networks:
-  YOUR_APP_NAME_network:
+  aaa_network:
     external: true
   bridge:
     driver: bridge

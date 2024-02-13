@@ -27,4 +27,6 @@ You can run make help to see the available commands
 
 # Staging
 
+Build the image with `make staging-build`
+Run the application with `make staging-start`
 # Production

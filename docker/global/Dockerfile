@@ -30,5 +30,6 @@ FROM php_base AS php_staging
 
 COPY ./.env.staging /var/www/.env
 
-ENTRYPOINT ["make", "deploy"]
+ENTRYPOINT ["make", "staging-deploy"]
 
+RUN chmod -R 777 /var/www/
