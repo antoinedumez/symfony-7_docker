@@ -56,6 +56,9 @@ make local-init: ## Initialize env and start docker containers.
 	make local-deploy && \
 	make local-bash
 
+make local-watch: ## Start watch command.
+	php bin/console tailwind:build --watch
+
 ##- Staging -----------------------------------------------------
 staging-build: ## Build image.
 	docker build -f ./docker/global/Dockerfile --target php_staging --build-arg name=staging -t ${APP_NAME}:staging .

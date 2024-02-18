@@ -1,4 +1,5 @@
 import './bootstrap.js';
+import { initFlowbite } from 'flowbite';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -6,5 +7,12 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
+import 'flowbite';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+document.addEventListener('turbo:render', () => {
+    initFlowbite();
+});
+document.addEventListener('turbo:frame-render', () => {
+    initFlowbite();
+});
