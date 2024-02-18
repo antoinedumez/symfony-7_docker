@@ -4,7 +4,7 @@
 
 #---VARIABLES---------------------------------#
 #---PROJECT---#
-APP_NAME = aaa
+APP_NAME = YOUR_APP_NAME
 DOCKER_NETWORK_NAME = ${APP_NAME}_network
 
 ##=== 🐋  DOCKER ================================================
