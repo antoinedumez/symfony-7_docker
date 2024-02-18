@@ -63,7 +63,7 @@ make local-watch: ## Start watch command.
 staging-build: ## Build image.
 	docker build -f ./docker/global/Dockerfile --target php_staging --build-arg name=staging -t ${APP_NAME}:staging .
 
-staging-up: ## Start docker containers.
+staging-restart: ## Restart docker containers.
 	docker compose --env-file .env.staging -f docker/staging-prod/docker-compose.yml down && \
 	docker compose --env-file .env.staging -f docker/staging-prod/docker-compose.yml up
 
@@ -71,17 +71,8 @@ staging-down: ## Stop docker containers.
 	docker compose --env-file ./bin/staging/.env.staging -f docker/staging-prod/docker-compose.yml down
 
 staging-bash: ## Start bash in php container.
-	docker exec -it staging__app bash
+	docker exec -it staging_${APP_NAME}_app bash
 
-staging-migrate: ## Run migrations.
-	php bin/console d:m:m --no-interaction
-
-staging-deploy: ## run migrations + composer install + cache clear.
-	make composer-install && \
-	make migration-migrate && \
-	chmod +x ./bin/deploy-staging.sh && \
-	./bin/deploy.sh && \
-	exec apache2-foreground
 
 ##- Help -----------------------------------------------------
 help: ## Show this help.
