@@ -16,6 +16,8 @@ In local, staging or production, the project will run with docker.
 - Clone the repository
 
 - Run `make local-init`
+- Follow the instructions 
+- In the bash container opened, run `make local-watch`
 
 ```
 Your application is available at http://localhost:1080 and your pgadmin at http://localhost:5050.
