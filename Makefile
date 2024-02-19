@@ -49,7 +49,6 @@ local-deploy: ## Run deploy script.
 
 make local-init: ## Initialize env and start docker containers.
 	cp .env.local.exemple .env && \
-	cp .env.staging.exemple .env.staging && \
 	./bin/modifyAppName.sh && \
 	make docker-network && \
 	make local-up && \
@@ -61,6 +60,11 @@ make local-watch: ## Start watch command.
 	php bin/console tailwind:build --watch
 
 ##- Staging -----------------------------------------------------
+make staging-init:
+	cp .env.staging.exemple .env.staging && \
+	./bin/modifyAppName.sh && \
+	make docker-network
+
 staging-build: ## Build image.
 	docker build -f ./docker/global/Dockerfile --target php_staging --build-arg name=staging -t ${APP_NAME}:staging .
 
