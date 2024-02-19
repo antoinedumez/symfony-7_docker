@@ -49,6 +49,7 @@ local-deploy: ## Run deploy script.
 
 make local-init: ## Initialize env and start docker containers.
 	cp .env.local.exemple .env && \
+	cp .env.staging.exemple .env.staging && \
 	./bin/modifyAppName.sh && \
 	make docker-network && \
 	make local-up && \

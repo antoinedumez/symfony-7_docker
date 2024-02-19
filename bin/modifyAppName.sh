@@ -5,7 +5,7 @@ echo "Veuillez entrer le nom de l'application : "
 read app_name
 
 # Liste des fichiers dans lesquels vous souhaitez effectuer le remplacement
-file_paths=(".env" "./docker/local/docker-compose.yml" "./Makefile")  # Remplacez ces noms de fichiers par les vôtres
+file_paths=(".env" "./docker/local/docker-compose.yml" "./Makefile" ".env.staging" "./docker/staging-prod/docker-compose.yml")  # Remplacez ces noms de fichiers par les vôtres
 
 # Définir une variable pour suivre l'état de remplacement
 app_name_replaced=false
